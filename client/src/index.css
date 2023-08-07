@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.react-phone-number-input__input {
+  background-color: lightgreen;
+}
+.PhoneInputInput{
+  background-color: #dfeefc;
+  border: none;
+}

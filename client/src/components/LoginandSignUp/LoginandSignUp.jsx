@@ -4,15 +4,19 @@ import { useState } from "react";
 import TextFields from "../Shared/FormElelments/TextFields";
 import PasswordFields from "../Shared/FormElelments/PasswordFields";
 import DropDown from "../Shared/FormElelments/DropDown";
+import PhoneNumberInputField from "../Shared/FormElelments/PhoneNumberField";
+
+
 const LoginAndSignupComponent = () => {
   const [change, setChange] = useState(true);
-  const[Email,setEmail] = useState("");
-  const[Name,setName] = useState("");
-  const[ContactNumber,setContactNumber] = useState("");
-  const[Gender,setGender] = useState("");
-  const[Password,setPassword] = useState("");
-  const[ConfirmPassword,setConfirmPassword] = useState("");
-  const menuItems = ["Male","Female"];
+  const [Email, setEmail] = useState("");
+  const [Name, setName] = useState("");
+  const [ContactNumber, setContactNumber] = useState("");
+  const [Gender, setGender] = useState("");
+  const [Password, setPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const menuItems = ["Male", "Female"];
+
   const handleChange = () => {
     if (change) {
       setChange(false);
@@ -20,20 +24,21 @@ const LoginAndSignupComponent = () => {
       setChange(true);
     }
   };
+  console.log(ContactNumber);
   return (
     <l.Container>
-        <l.Section1>
+      <l.Section1>
         <l.HeaderContainer>
-                <l.Header>Appointment Scheduling System</l.Header>
-              </l.HeaderContainer>
-        </l.Section1>
+          <l.Header>Appointment Scheduling System</l.Header>
+        </l.HeaderContainer>
+      </l.Section1>
       <l.Section1>
         <l.SectionLeft>
           <l.Image src={image} />
         </l.SectionLeft>
         <>
           {change ? (
-            <l.SectionRight style={{marginTop:"5.85%"}}>
+            <l.SectionRight style={{ marginTop: "5.85%" }}>
               <l.SubHeadingContainer>
                 <l.SubHeading>Login</l.SubHeading>
               </l.SubHeadingContainer>
@@ -42,13 +47,21 @@ const LoginAndSignupComponent = () => {
                   <l.Label>
                     <l.LabelText>Email</l.LabelText>
                   </l.Label>
-                  <TextFields Value={Email} setValue={setEmail} placeholder={'Enter the email'}/>
+                  <TextFields
+                    Value={Email}
+                    setValue={setEmail}
+                    placeholder={"Enter the email"}
+                  />
                 </l.InputFeild>
                 <l.InputFeild>
                   <l.Label>
                     <l.LabelText>Password</l.LabelText>
                   </l.Label>
-                  <PasswordFields  Value={Password} setValue={setPassword} placeholder={'Enter the password'}/>
+                  <PasswordFields
+                    Value={Password}
+                    setValue={setPassword}
+                    placeholder={"Enter the password"}
+                  />
                 </l.InputFeild>
               </l.InputSection>
               <l.FrogotPassword>
@@ -72,42 +85,67 @@ const LoginAndSignupComponent = () => {
                 <l.SubHeading>Register</l.SubHeading>
               </l.SubHeadingContainer1>
               <l.InputSection1>
-                  <l.InputFeild>
-                    <l.Label1>
-                      <l.LabelText>Name</l.LabelText>
-                    </l.Label1>
-                    <TextFields Value={Name} setValue={setName} placeholder={'Enter the name'}/>
-                  </l.InputFeild>
-                  <l.InputFeild>
-                    <l.Label1>
-                      <l.LabelText>Email</l.LabelText>
-                    </l.Label1>
-                    <TextFields Value={Email} setValue={setEmail} placeholder={'Enter the email'}/>
-                  </l.InputFeild>
-                  <l.InputFeild>
-                    <l.Label1>
-                      <l.LabelText>Contact Number</l.LabelText>
-                    </l.Label1>
-                    <TextFields Value={ContactNumber} setValue={setContactNumber} placeholder={'Enter the contact number'}/>
-                  </l.InputFeild>
-                  <l.InputFeild>
-                    <l.Label1>
-                      <l.LabelText>Gender</l.LabelText>
-                    </l.Label1>
-                    <DropDown placeholder={'Select gender'} Value={Gender} setValue={setGender} menuItems={menuItems}/>
-                  </l.InputFeild>
-                  <l.InputFeild>
-                    <l.Label1>
-                      <l.LabelText>Password</l.LabelText>
-                    </l.Label1>
-                    <TextFields Value={Password} setValue={setPassword} placeholder={'Enter the password'}/>
-                  </l.InputFeild>
-                  <l.InputFeild>
-                    <l.Label1>
-                      <l.LabelText>Confirm Password</l.LabelText>
-                    </l.Label1>
-                    <TextFields Value={ConfirmPassword} setValue={setConfirmPassword} placeholder={'Re-enter the password'}/>
-                  </l.InputFeild>
+                <l.InputFeild>
+                  <l.Label1>
+                    <l.LabelText>Name</l.LabelText>
+                  </l.Label1>
+                  <TextFields
+                    Value={Name}
+                    setValue={setName}
+                    placeholder={"Enter the name"}
+                  />
+                </l.InputFeild>
+                <l.InputFeild>
+                  <l.Label1>
+                    <l.LabelText>Email</l.LabelText>
+                  </l.Label1>
+                  <TextFields
+                    Value={Email}
+                    setValue={setEmail}
+                    placeholder={"Enter the email"}
+                  />
+                </l.InputFeild>
+                <l.InputFeild>
+                  <l.Label1>
+                    <l.LabelText>Contact Number</l.LabelText>
+                  </l.Label1>
+                  <PhoneNumberInputField
+                    placeholder = {'Enter the contact number'} 
+                    value = {ConfirmPassword}
+                    setvalue = {setContactNumber}
+                  />
+                </l.InputFeild>
+                <l.InputFeild>
+                  <l.Label1>
+                    <l.LabelText>Gender</l.LabelText>
+                  </l.Label1>
+                  <DropDown
+                    placeholder={"Select gender"}
+                    Value={Gender}
+                    setValue={setGender}
+                    menuItems={menuItems}
+                  />
+                </l.InputFeild>
+                <l.InputFeild>
+                  <l.Label1>
+                    <l.LabelText>Password</l.LabelText>
+                  </l.Label1>
+                  <TextFields
+                    Value={Password}
+                    setValue={setPassword}
+                    placeholder={"Enter the password"}
+                  />
+                </l.InputFeild>
+                <l.InputFeild>
+                  <l.Label1>
+                    <l.LabelText>Confirm Password</l.LabelText>
+                  </l.Label1>
+                  <TextFields
+                    Value={ConfirmPassword}
+                    setValue={setConfirmPassword}
+                    placeholder={"Re-enter the password"}
+                  />
+                </l.InputFeild>
               </l.InputSection1>
               <l.ButtonSection1>
                 <l.Button>Register</l.Button>
