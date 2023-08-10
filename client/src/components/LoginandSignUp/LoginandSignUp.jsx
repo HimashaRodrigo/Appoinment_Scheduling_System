@@ -1,11 +1,13 @@
 import * as l from "./LoginandSignUpElements";
 import image from "../../images/3959915-removebg-preview.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextFields from "../Shared/FormElelments/TextFields";
 import PasswordFields from "../Shared/FormElelments/PasswordFields";
 import DropDown from "../Shared/FormElelments/DropDown";
 import PhoneNumberInputField from "../Shared/FormElelments/PhoneNumberField";
-
+import useAuth from "../../hooks/useAuth";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const LoginAndSignupComponent = () => {
   const [change, setChange] = useState(true);
@@ -24,7 +26,93 @@ const LoginAndSignupComponent = () => {
       setChange(true);
     }
   };
-  console.log(ContactNumber);
+  const { RegisterUser, logingUser, user, loading, isAuthenticated } = useAuth();
+
+  const navigate = useNavigate();
+
+  const formData = { Name, Email, Password, ConfirmPassword, ContactNumber, Gender };
+  const SignupSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      toast.promise(
+        RegisterUser(formData),
+        {
+          loading: "Registering.....",
+          success: (data) => `User Registered Successfully`,
+          error: (err) => {
+            console.log(err.response);
+            if (!err?.response?.data?.message) {
+              return "Something went wrong! Try again";
+            }
+            return `${err.response.data.message}`;
+          },
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loginSubmit = (e) => {
+    e.preventDefault();
+    try {
+      toast.promise(
+        logingUser({ Email, Password }),
+        {
+          loading: "Logging in .....",
+          success: (data) => `Logged in successfully`,
+          error: (err) => {
+            if (!err?.response?.data?.message) {
+              return "Something went wrong! Try again";
+            }
+            return `${err?.response?.data?.message}`;
+          },
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!loading && user && isAuthenticated) {
+      console.log(user.Role);
+      switch (user.Role) {
+        case "Admin":
+          navigate("/admin-profile");
+          break;
+        case "Receptionist":
+          navigate("/receptionist-profile");
+          break;
+        case "Job-Seeker":
+          navigate("/job-seeker-profile");
+          break;
+        case "Consaltant":
+          navigate("/consaltant-profile");
+          break;
+        default:
+          navigate("/");
+          break;
+      }
+    }
+  }, [isAuthenticated, user]);
+
   return (
     <l.Container>
       <l.Section1>
@@ -68,7 +156,7 @@ const LoginAndSignupComponent = () => {
                 <l.P1>Forgot Your Password ?</l.P1>
               </l.FrogotPassword>
               <l.ButtonSection>
-                <l.Button>Login</l.Button>
+                <l.Button onClick={loginSubmit}>Login</l.Button>
               </l.ButtonSection>
               <l.Option>
                 <l.P2>
@@ -148,7 +236,7 @@ const LoginAndSignupComponent = () => {
                 </l.InputFeild>
               </l.InputSection1>
               <l.ButtonSection1>
-                <l.Button>Register</l.Button>
+                <l.Button onClick={SignupSubmit}>Register</l.Button>
               </l.ButtonSection1>
               <l.Option>
                 <l.P2>

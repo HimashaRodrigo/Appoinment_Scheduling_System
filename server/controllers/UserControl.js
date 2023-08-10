@@ -160,7 +160,7 @@ export const getUsersByRole = async (req, res) => {
 };
 
 // Method : Patch
-// End Point : "api/v1/User/:id"
+// End Point : "api/v1/user/:id"
 // Description : Deactivate User By Email
 
 export const deactivateUser = async (req, res) => {

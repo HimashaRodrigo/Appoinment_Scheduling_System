@@ -1,6 +1,12 @@
 import JobSeeker from "../models/JobSeeker.js";
 import User from "../models/Users.js";
-import { GeneratePassword, GenerateSalt, createToken, validatePassword } from "../utils/AuthUtil.js";
+import { GeneratePassword, GenerateSalt, createToken, transporter, validatePassword } from "../utils/AuthUtil.js";
+import path from "path";
+import ejs from "ejs";
+
+const __dirname = path
+  .dirname(path.dirname(new URL(import.meta.url).pathname))
+  .slice(1);
 
 // METHOD:POST,
 // END POINT : api/v1/auth/login
@@ -148,6 +154,124 @@ export const PasswordReset = async (req, res) => {
       res.status(402).json({
         status: "Error",
         message: `Current Password is incorrect!`,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "Server Error",
+      message: error.message,
+    });
+  }
+};
+
+const createOTP = () => {
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  return otp;
+};
+let otp;
+let Email1;
+export const sendOTP = async (req, res) => {
+  try {
+    const {Email } = req.body;
+    Email1 = Email;
+    const jobseeker = await JobSeeker.findOne({ Email: Email }).populate("Email");
+    const sysUser = await User.findOne({
+      Email: Email,
+    }).populate("Email");
+    otp = createOTP();
+    if (jobseeker || sysUser) {
+      const mailOption = {
+        from: "resto6430@gmail.com",
+        to: Email,
+        subject: "Paasowrd Reset",
+      };
+      ejs.renderFile(
+        `${__dirname}/Template/forgotPassword.ejs`,{OTP:otp},
+        (err, renderHTML) => {
+          if (err) {
+            console.log(err.message);
+            res.status(500).json({
+              status: "Server Error",
+              message: err.message,
+            });
+          } else {
+            mailOption.html = renderHTML;
+            transporter.sendMail(mailOption, (err, info) => {
+              if (err) {
+                console.log(err.message);
+                res.status(500).json({
+                  status: "Server Error",
+                  message: err.message,
+                });
+              } else {
+                res.status(201).json({
+                  status: "Success",
+                  message: "OTP send Successfull",
+                });
+              }
+            });
+          }
+        }
+      );
+    } else {
+      res.status(404).json({ message: `Invalid Contact Number` });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "Server Error",
+      message: error.message,
+    });
+  }
+};
+
+export const ForgotPassword = async (req, res) => {
+  try {
+    const { OTP, Password, ConfirmPassword } = req.body
+    const jobseeker = await JobSeeker.findOne({ Email:Email1 }).populate("Email");
+    const sysUser = await User.findOne({
+      Email:Email1,
+    }).populate("Email");
+    const salt = await GenerateSalt();
+    const encryptedPassword = await GeneratePassword(Password, salt);
+    if (otp == OTP) {
+      if(Password === ConfirmPassword){
+        if (jobseeker) {
+          const updateJobSeekerPwd = await JobSeeker.findByIdAndUpdate(
+            customer.id,
+            {
+              Password: encryptedPassword,
+            },
+            { new: true }
+          );
+          res.status(200).json({
+            status: "Success",
+            message: "Password Reset Successfully",
+            data: {
+              updateJobSeekerPwd,
+            },
+          });
+        } else if (sysUser) {
+          const updateUserPwd =
+            await User.findByIdAndUpdate(
+              customer.id,
+              {
+                Password: encryptedPassword,
+              },
+              { new: true }
+            );
+          res.status(200).json({
+            status: "Success",
+            message: "Password Reset Successfully",
+            data: {
+              updateUserPwd,
+            },
+          });
+        }
+      }
+    } else {
+      res.status(400).json({
+        status: "Success",
+        message: "Invalid OTP",
       });
     }
   } catch (error) {
