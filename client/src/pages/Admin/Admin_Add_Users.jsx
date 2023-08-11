@@ -1,10 +1,11 @@
+import AddUser from "../../components/Shared/AddUser/AddUser";
 import DashBoard from "../../components/Shared/DashBoard/DashBoard";
 
-const AdminAddUser = ({menuItems}) => {
+const AdminAddUser = ({menuItems,backRoutes}) => {
     return ( 
         <>
-            <DashBoard menuItems={menuItems} rightContainer={
-                <p>test</p>
+            <DashBoard menuItems={menuItems} backRoutes={backRoutes} rightContainer={
+                <AddUser/>
             }/>
         </>
      );

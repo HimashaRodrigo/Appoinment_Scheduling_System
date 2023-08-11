@@ -12,8 +12,8 @@ export const Header = styled.div`
   width: 100%;
   display: flex;
   height: 10%;
+  margin-top: 2%;
   justify-content: right;
- 
 `;
 export const UserDetails = styled.div`
   display: flex;
@@ -26,12 +26,12 @@ export const Image = styled.div`
   width: 40%;
   justify-content: center;
 `;
-export const ProfilePic= styled.img`
+export const ProfilePic = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 100%;
   background-color: #000;
-`
+`;
 export const Details = styled.div`
   display: flex;
   flex-direction: column;
@@ -111,13 +111,13 @@ export const Logout = styled.div`
 `;
 
 export const MenuItem = styled.div`
-  &{
+  & {
     display: flex;
-  align-items: center;
-  width: 80%;
-  margin: 5%;
+    align-items: center;
+    width: 80%;
+    margin: 5%;
   }
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -151,10 +151,31 @@ export const BackgroundImage = styled.div`
   background-position: center;
   opacity: 0.3;
   position: absolute;
-    width: 80%;
-    height: 100%;
-    z-index: -1;
-`
+  width: 80%;
+  height: 100%;
+  z-index: -1;
+`;
 export const OptionWindow = styled.div`
   height: 90%;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+export const Section2 = styled.div`
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+export const CopyRight = styled.div`
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
+export const Text = styled.p`
+  color: #454555;
+  margin: 0;
+`;

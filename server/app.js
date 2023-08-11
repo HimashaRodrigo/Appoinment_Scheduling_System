@@ -28,6 +28,7 @@ const corsOption = {
     origin : "http://localhost:3000",
     credntials:true
 };
+app.use(express.static("public"));
 app.use(cors(corsOption));
 app.use(express.json({extended:true}));
 app.use(express.urlencoded({extended:true}));
@@ -48,7 +49,8 @@ app.use(
       rolling: true,
     })
   );
-
+  app.use("/images", express.static("Images/Users"));
+  
 app.use("/api/v1/auth",AuthRoutes);
 
 app.use("/api/v1/appoinment",requireAuth,AppoinmentRoutes);

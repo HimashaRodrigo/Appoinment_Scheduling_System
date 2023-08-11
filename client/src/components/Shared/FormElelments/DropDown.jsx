@@ -7,13 +7,13 @@ const Select = styled.select`
     padding: 0 5%;
     background-color: #dfeefc;
   `;
-const DropDown = ({ placeholder, Value, setValue, menuItems }) => {
+const DropDown = ({ placeholder, Value, setValue, menuItems,defaultValue }) => {
   
   console.log(menuItems + "\n" + placeholder);
   return (
     <Select
       placeholder={placeholder || "placeholder"}
-      defaultValue={null}
+      defaultValue={defaultValue}
       value={Value}
       onChange={(e) => setValue(e.target.value)}
       required={true}

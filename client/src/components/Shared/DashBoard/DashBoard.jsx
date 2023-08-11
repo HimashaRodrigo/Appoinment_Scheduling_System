@@ -1,5 +1,14 @@
+import { Link } from "react-router-dom";
 import * as l from "./DashBoardElements.js";
-const DashBoard = ({ rightContainer, menuItems }) => {
+import { CgLogOut } from "react-icons/cg";
+import useAuth from "../../../hooks/useAuth.js";
+const DashBoard = ({ rightContainer, menuItems, backRoutes }) => {
+  const { logout,user } = useAuth();
+  const onclick = (link) => {
+    if (link === "/") {
+      logout();
+    }
+  };
   return (
     <l.Container>
       <l.Body>
@@ -10,34 +19,53 @@ const DashBoard = ({ rightContainer, menuItems }) => {
           <l.Menu>
             {menuItems.map((data) => {
               return (
-                <l.MenuItem>
-                  <l.Icon>{data.icon}</l.Icon>
-                  <l.Option>{data.text}</l.Option>
-                </l.MenuItem>
+                <Link className="btn" to={data.link}>
+                  <l.MenuItem>
+                    <l.Icon>{data.icon}</l.Icon>
+                    <l.Option>{data.text}</l.Option>
+                  </l.MenuItem>
+                </Link>
               );
             })}
           </l.Menu>
           <l.Logout>
-            <l.MenuItem>
-              <l.Icon></l.Icon>
-              <l.Option></l.Option>
-            </l.MenuItem>
+            <Link
+              to={"/"}
+              onClick={() => {
+                onclick("/");
+              }}
+              className="btn"
+            >
+              <l.MenuItem>
+                <l.Icon>
+                  <CgLogOut />
+                </l.Icon>
+                <l.Option>LogOut</l.Option>
+              </l.MenuItem>
+            </Link>
           </l.Logout>
         </l.LeftContainer>
         <l.RightContainer>
           <l.BackgroundImage></l.BackgroundImage>
           <l.Header>
             <l.UserDetails>
+              <Link className="btn" to={backRoutes}>
               <l.Image>
-                <l.ProfilePic/>
+                <l.ProfilePic src={`http://localhost:5000/images/${user?.ProfileImage}`}/>
               </l.Image>
+              </Link>
               <l.Details>
-                <l.Role>Admin</l.Role>
-                <l.Name>Mr.Silva</l.Name>
+                <l.Role>{user.Role}</l.Role>
+                <l.Name>{user.Name}</l.Name>
               </l.Details>
             </l.UserDetails>
           </l.Header>
           <l.OptionWindow>{rightContainer}</l.OptionWindow>
+          <l.Section2>
+            <l.CopyRight>
+              <l.Text>All Right Reserved | © Copy Rights 2023</l.Text>
+            </l.CopyRight>
+          </l.Section2>
         </l.RightContainer>
       </l.Body>
     </l.Container>

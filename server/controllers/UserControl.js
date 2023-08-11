@@ -1,6 +1,11 @@
 import JobSeeker from "../models/JobSeeker.js";
 import User from "../models/Users.js";
-import { GeneratePassword, GenerateSalt, createToken, transporter } from "../utils/AuthUtil.js";
+import {
+  GeneratePassword,
+  GenerateSalt,
+  createToken,
+  transporter,
+} from "../utils/AuthUtil.js";
 import path from "path";
 import ejs from "ejs";
 import { updateAccount } from "../utils/UpdateProfile.js";
@@ -12,7 +17,7 @@ const __dirname = path
 console.log(__dirname);
 
 // Method : POST
-// End Point : "api/v1/User"
+// End Point : "api/v1/user"
 // Description : Create User
 export const createUserAccounts = async (req, res) => {
   try {
@@ -22,60 +27,64 @@ export const createUserAccounts = async (req, res) => {
       const Password = "12345678";
       const salt = await GenerateSalt();
       const encryptPassword = await GeneratePassword(Password, salt);
-      const newUser = await User.create({
-        Email: Email,
-        Password: encryptPassword,
-        Role: Role,
-      });
-      //send Email
-      const mailOption = {
-        from: "resto6430@gmail.com",
-        to: Email,
-        subject: "Registration Confrimation",
-      };
+      const user = await User.findOne({ Email: Email }).populate("Email");
+      if (user === null) {
+        const newUser = await User.create({
+          Email: Email,
+          Password: encryptPassword,
+          Role: Role,
+        });
+        //send Email
+        const mailOption = {
+          from: "resto6430@gmail.com",
+          to: Email,
+          subject: "Registration Confrimation",
+        };
 
-      ejs.renderFile(
-        `${__dirname}/Template/RegistrationEmail.ejs`,
-        { Email: Email },
-        (err, renderHTML) => {
-          if (err) {
-            console.log(err.message);
-            res.status(500).json({
-              status: "Server Error",
-              message: err.message,
-            });
-          } else {
-            mailOption.html = renderHTML;
-            transporter.sendMail(mailOption, (err, info) => {
-              if (err) {
-                console.log(err.message);
-                res.status(500).json({
-                  status: "Server Error",
-                  message: err.message,
-                });
-              } else {
-                const token = createToken(
-                  newUser._id,
-                  newUser.Email
-                );
-                res.status(201).json({
-                  status: "Success",
-                  message: "Registration Successfull",
-                  data: {
-                    token,
-                  },
-                });
-              }
-            });
+        ejs.renderFile(
+          `${__dirname}/Template/RegistrationEmail.ejs`,
+          (err, renderHTML) => {
+            if (err) {
+              console.log(err.message);
+              res.status(500).json({
+                status: "Server Error",
+                message: err.message,
+              });
+            } else {
+              mailOption.html = renderHTML;
+              transporter.sendMail(mailOption, (err, info) => {
+                if (err) {
+                  console.log(err.message);
+                  res.status(500).json({
+                    status: "Server Error",
+                    message: err.message,
+                  });
+                } else {
+                  const token = createToken(newUser._id, newUser.Email);
+                  res.status(201).json({
+                    status: "Success",
+                    message: "Registration Successfull",
+                    data: {
+                      token,
+                    },
+                  });
+                }
+              });
+            }
           }
-        }
-      );
+        );
+      } else {
+        res.status(400).json({
+          status: "ERROR",
+          message: "This email is already registered",
+        });
+      }
     }
   } catch (error) {
     res.status(500).json({
-        status: "Server error",
-        message: error.message,
-      });
+      status: "Server error",
+      message: error.message,
+    });
   }
 };
 
@@ -127,9 +136,7 @@ export const getUsersByRole = async (req, res) => {
     const user = req.user;
     if (user.Role === "Admin" || user.Role === "Receptionist") {
       const { Role } = req.params;
-      const Users = await User.find({ Role: Role }).populate(
-        "Role"
-      );
+      const Users = await User.find({ Role: Role }).populate("Role");
       if (Users !== null) {
         let users = [];
         Users.map((user) => {
@@ -171,10 +178,11 @@ export const deactivateUser = async (req, res) => {
       const findsysUser = await User.findById(id);
       if (findsysUser) {
         const deactivateUser = await User.findByIdAndUpdate(
-          findsysUser.id,{
-            Status:"Deactive"
+          findsysUser.id,
+          {
+            Status: "Deactive",
           },
-          {new:true}
+          { new: true }
         );
         res.status(200).json({
           status: "Success",
@@ -204,7 +212,8 @@ export const deactivateUser = async (req, res) => {
 export const updateUserAccount = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedUser = await updateAccount(id,req);
+    const updatedUser = await updateAccount(id, req);
+    console.log(updatedUser);
     res.status(200).json({
       status: "Success",
       message: `Profile is updated `,

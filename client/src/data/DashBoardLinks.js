@@ -17,7 +17,7 @@ export const DashBoardLinks = [
             {
                 text:"Job Category Details",
                 icon: <BsCashCoin/>,
-                link: "/admin-view-user"
+                link: "/admin-job-categories"
             }
         ]
     },

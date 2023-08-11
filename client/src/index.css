@@ -18,3 +18,14 @@ code {
   background-color: #dfeefc;
   border: none;
 }
+#file{
+  display: none;
+}
+.btn a {
+  text-decoration: none;
+}
+.btn {
+  width: 100%;
+  text-decoration: none;
+  color: #000;
+}

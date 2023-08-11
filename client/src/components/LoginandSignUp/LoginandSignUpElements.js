@@ -143,29 +143,17 @@ export const P1 = styled.p`
   color: #FF9D38;
 `;
 export const ButtonSection = styled.div`
-  display: flex;
   width: 100%;
-  justify-content: center;
-  align-items: center;
-`;
-export const ButtonSection1 = styled(ButtonSection)`
-  margin-top: 2%;
-`;
-export const Button = styled.div`
-  & {
-    width: 150px;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50px;
-    background-color: #FF9D38;
-    color: #fff;
-  }
-  &:hover {
-    cursor: pointer;
-  }
 `;
+export const ButtonSection1 = styled(ButtonSection)`
+  margin-top: 2%;
+    
+`;
+
 export const Option = styled.div`
   display: flex;
   justify-content: center;

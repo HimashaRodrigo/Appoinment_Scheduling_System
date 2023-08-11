@@ -8,6 +8,7 @@ import PhoneNumberInputField from "../Shared/FormElelments/PhoneNumberField";
 import useAuth from "../../hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import FormButton from "../Shared/FormElelments/FormButton";
 
 const LoginAndSignupComponent = () => {
   const [change, setChange] = useState(true);
@@ -156,7 +157,7 @@ const LoginAndSignupComponent = () => {
                 <l.P1>Forgot Your Password ?</l.P1>
               </l.FrogotPassword>
               <l.ButtonSection>
-                <l.Button onClick={loginSubmit}>Login</l.Button>
+              <FormButton text={"Login"} onAction={loginSubmit}/>
               </l.ButtonSection>
               <l.Option>
                 <l.P2>
@@ -199,7 +200,7 @@ const LoginAndSignupComponent = () => {
                   </l.Label1>
                   <PhoneNumberInputField
                     placeholder = {'Enter the contact number'} 
-                    value = {ConfirmPassword}
+                    value = {ContactNumber}
                     setvalue = {setContactNumber}
                   />
                 </l.InputFeild>
@@ -236,7 +237,7 @@ const LoginAndSignupComponent = () => {
                 </l.InputFeild>
               </l.InputSection1>
               <l.ButtonSection1>
-                <l.Button onClick={SignupSubmit}>Register</l.Button>
+                <FormButton text={"SignUp"} onAction={SignupSubmit}/>
               </l.ButtonSection1>
               <l.Option>
                 <l.P2>
