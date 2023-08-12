@@ -1,4 +1,5 @@
-import AddUser from "../../components/Shared/AddUser/AddUser";
+
+import AddUser from "../../components/Admin/AddUser/AddUser";
 import DashBoard from "../../components/Shared/DashBoard/DashBoard";
 
 const AdminAddUser = ({menuItems,backRoutes}) => {

@@ -13,7 +13,7 @@ export const image = multer({ storage: imageStorage }).single("image");
 
 export const updateAccount = async (id, req) => {
   try {
-    const { Name, image, Email, ContactNumber, Gender, Status } = req.body;
+    const { Name, image, Email, ContactNumber, Gender } = req.body;
     console.log(req.body);
     let Model, updatedUser;
 
@@ -34,7 +34,6 @@ export const updateAccount = async (id, req) => {
       ContactNumber: ContactNumber,
       Gender: Gender,
       ProfileImage: req.file ? req.file.filename : image,
-      Status:Status
     };
 
     updatedUser = await Model.findByIdAndUpdate(id, data, { new: true });

@@ -167,28 +167,36 @@ export const getUsersByRole = async (req, res) => {
 };
 
 // Method : Patch
-// End Point : "api/v1/user/:id"
-// Description : Deactivate User By Email
+// End Point : "api/v1/user"
+// Description : Update User By Email
 
-export const deactivateUser = async (req, res) => {
+export const UpdateUserByAdmin = async (req, res) => {
   try {
     const user = req.user;
     if (user.Role === "Admin") {
-      const { id } = req.params;
-      const findsysUser = await User.findById(id);
+      const {Email,Name,Gender,ContactNumber,Role,Status} = req.body;
+      
+      const findsysUser = await User.findOne({Email:Email}).populate("Email");
+      
       if (findsysUser) {
-        const deactivateUser = await User.findByIdAndUpdate(
+        const updateUser = await User.findByIdAndUpdate(
           findsysUser.id,
           {
-            Status: "Deactive",
+            Name:Name,
+            Email:Email,
+            Status: Status,
+            Role:Role,
+            ContactNumber:ContactNumber,
+            Gender:Gender
           },
           { new: true }
         );
+        console.log(updateUser);
         res.status(200).json({
           status: "Success",
-          message: `${findsysUser.Email} is deactivated`,
+          message: `${findsysUser.Email} is updated`,
           data: {
-            deactivateUser,
+            updateUser,
           },
         });
       }

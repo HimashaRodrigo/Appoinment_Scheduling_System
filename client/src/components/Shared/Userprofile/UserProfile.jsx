@@ -32,7 +32,7 @@ const UserProfile = () => {
   const UpdateProfile = async(e)=>{
     e.preventDefault();
     try {
-      const formData = new FormData();
+      const formData = new FormData;
       formData.append("image",image);
       formData.append("Name",Name);
       formData.append("Email",Email);
@@ -99,7 +99,7 @@ const UserProfile = () => {
   console.log(Gender);
   return (
     <l.Container>
-      <l.Upper onSubmit={UpdateProfile}>
+      <l.Upper>
         <l.Left>
           <l.ImageSection>
             <l.ImageSubSec>
@@ -154,7 +154,7 @@ const UserProfile = () => {
             />
           </l.InputFeild1>
           <l.ButtonSection>
-            <FormButton text={"Update"}/>
+            <FormButton text={"Update"} onAction={UpdateProfile}/>
           </l.ButtonSection>
         </l.Right>
       </l.Upper>

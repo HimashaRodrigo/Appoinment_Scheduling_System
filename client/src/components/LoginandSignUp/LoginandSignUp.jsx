@@ -35,6 +35,7 @@ const LoginAndSignupComponent = () => {
   const SignupSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData);
       toast.promise(
         RegisterUser(formData),
         {
@@ -101,7 +102,7 @@ const LoginAndSignupComponent = () => {
         case "Receptionist":
           navigate("/receptionist-profile");
           break;
-        case "Job-Seeker":
+        case "Job Seeker":
           navigate("/job-seeker-profile");
           break;
         case "Consaltant":
@@ -198,10 +199,10 @@ const LoginAndSignupComponent = () => {
                   <l.Label1>
                     <l.LabelText>Contact Number</l.LabelText>
                   </l.Label1>
-                  <PhoneNumberInputField
-                    placeholder = {'Enter the contact number'} 
-                    value = {ContactNumber}
-                    setvalue = {setContactNumber}
+                  <PhoneNumberInputField 
+                    value={ContactNumber}
+                    setvalue={setContactNumber}
+                    placeholder={"Enter the contact number"}
                   />
                 </l.InputFeild>
                 <l.InputFeild>
@@ -213,13 +214,14 @@ const LoginAndSignupComponent = () => {
                     Value={Gender}
                     setValue={setGender}
                     menuItems={menuItems}
+                    defaultValue={"Male"}
                   />
                 </l.InputFeild>
                 <l.InputFeild>
                   <l.Label1>
                     <l.LabelText>Password</l.LabelText>
                   </l.Label1>
-                  <TextFields
+                  <PasswordFields
                     Value={Password}
                     setValue={setPassword}
                     placeholder={"Enter the password"}
@@ -229,7 +231,7 @@ const LoginAndSignupComponent = () => {
                   <l.Label1>
                     <l.LabelText>Confirm Password</l.LabelText>
                   </l.Label1>
-                  <TextFields
+                  <PasswordFields
                     Value={ConfirmPassword}
                     setValue={setConfirmPassword}
                     placeholder={"Re-enter the password"}

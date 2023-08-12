@@ -27,7 +27,6 @@ const UserSchema = mongoose.Schema(
         message:
           "User role must be one of : ['Admin','Receptionist','Consaltant']",
       },
-      immutable: true,
     },
     ContactNumber: {
       type: Number,

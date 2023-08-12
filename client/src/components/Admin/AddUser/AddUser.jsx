@@ -1,9 +1,9 @@
 import { useState } from "react";
-import TextFields from "../FormElelments/TextFields";
+import TextFields from "../../Shared/FormElelments/TextFields";
 import * as l from "./AddUserElements";
-import DropDown from "../FormElelments/DropDown";
-import HeadingComponent from "../FormElelments/Heading";
-import FormButton from "../FormElelments/FormButton";
+import DropDown from "../../Shared/FormElelments/DropDown";
+import HeadingComponent from "../../Shared/FormElelments/Heading";
+import FormButton from "../../Shared/FormElelments/FormButton";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";

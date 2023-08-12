@@ -15,8 +15,8 @@ const maxAge = 3 * 24 * 60 * 60;
 export const LoginUser = async (req, res) => {
   const { Email, Password } = req.body;
   try {
-    const user = await User.findOne({ Email: Email });
-    const jobseekr = await JobSeeker.findOne({ Email: Email });
+    const user = await User.findOne({ Email: Email }).populate("Email");
+    const jobseeker = await JobSeeker.findOne({ Email: Email }).populate("Email");
     if (user != null) {
       const result = await validatePassword(Password, user.Password);
       if (result) {
@@ -29,10 +29,11 @@ export const LoginUser = async (req, res) => {
           message: "Invalid Password",
         });
       }
-    } else if (jobseekr != null) {
-      const result = await validatePassword(Password, user.Password);
+    } else if (jobseeker != null) {
+      const result = await validatePassword(Password, jobseeker.Password);
+      
       if (result) {
-        const token = createToken(user._id, user.Email, user.Role);
+        const token = createToken(jobseeker._id, jobseeker.Email, jobseeker.Role);
         res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.json(token);
       } else {

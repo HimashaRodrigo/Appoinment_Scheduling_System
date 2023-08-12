@@ -19,11 +19,10 @@ export const UserDetails = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 20%;
+  width: 30%;
 `;
 export const Image = styled.div`
   display: flex;
-  width: 40%;
   justify-content: center;
 `;
 export const ProfilePic = styled.img`
@@ -36,7 +35,7 @@ export const Details = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 0.2rem;
-  width: 60%;
+  width: 100%;
 `;
 export const Role = styled.h3`
   font-weight: 500;
