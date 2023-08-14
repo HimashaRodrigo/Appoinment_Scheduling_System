@@ -148,7 +148,7 @@ export const BackgroundImage = styled.div`
   background-image: url(${Background_Img});
   background-size: cover;
   background-position: center;
-  opacity: 0.3;
+  opacity: 0.1;
   position: absolute;
   width: 80%;
   height: 100%;

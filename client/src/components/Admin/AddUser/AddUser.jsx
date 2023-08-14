@@ -6,7 +6,6 @@ import HeadingComponent from "../../Shared/FormElelments/Heading";
 import FormButton from "../../Shared/FormElelments/FormButton";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
 const AddUser = () => {
   const [Email, setEmail] = useState("");
   const [Role, setRole] = useState("");

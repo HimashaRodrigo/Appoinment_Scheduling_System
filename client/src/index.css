@@ -29,3 +29,68 @@ code {
   text-decoration: none;
   color: #000;
 }
+/* Set the font family and color */
+.react-time-picker {
+  font-family: Arial, sans-serif;
+  height: 40px;
+  border-radius: 50px;
+  border: none;
+  background-color: #dfeefc;
+  width: 110%;
+  padding: 0 10%;
+  display: flex;
+  justify-content: center;
+}
+.react-clock {
+  display: none;
+}
+
+/* Style the input field */
+.react-time-picker__inputGroup {
+  width: 100%;
+  color: #000;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border: none;
+}
+
+/* Style the hour and minute input fields */
+.react-time-picker__inputGroup__hour,
+.react-time-picker__inputGroup__minute {
+  width: 50%;
+  color: #000;
+  text-align: center;
+  font-size: 1.2em;
+  border: none;
+}
+
+/* Style the AM/PM selector */
+.react-time-picker__inputGroup__amPm {
+  width: 50%;
+  text-align: center;
+  font-size: 1.2em;
+  color: #000;
+  margin-left: 10px;
+}
+
+/* Style the up and down arrows */
+.react-time-picker__button {
+  width: 50%;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* Style the up arrow */
+.react-time-picker__button--up {
+  border-bottom: 1px solid #ccc;
+  color: #fff;
+}
+
+/* Style the down arrow */
+.react-time-picker__button--down {
+  border-top: 1px solid #ccc;
+  color: #fff;
+}

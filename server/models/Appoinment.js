@@ -2,6 +2,12 @@ import mongoose from "mongoose";
 
 const AppoinmentSchema = mongoose.Schema(
     {
+        AppoinmentNo:{
+            type:String,
+            required:[true,"Appoinment Number Is Mandatory"],
+            unique:true,
+            immutable:true
+        },
         Consaltant:{
             type: mongoose.Schema.ObjectId,
             ref:'User'
@@ -15,7 +21,7 @@ const AppoinmentSchema = mongoose.Schema(
             ref:'JobSeeker'
         },
         Date:{
-            type:Date,
+            type:String,
             required:[true,"Date is mandatory"]
         },
         Time:{

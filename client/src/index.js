@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'react-phone-number-input/style.css'
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
 import { BrowserRouter } from "react-router-dom";
 
 

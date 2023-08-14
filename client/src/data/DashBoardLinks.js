@@ -1,5 +1,6 @@
 import { BsCashCoin, BsPersonFill, BsPersonPlusFill } from 'react-icons/bs';
 import { IoDocuments } from 'react-icons/io5';
+import { FaUserTie } from 'react-icons/fa';
 export const DashBoardLinks = [
     {
         Role:"Admin",
@@ -28,6 +29,11 @@ export const DashBoardLinks = [
                 text:"Appoinment Details",
                 icon:<IoDocuments />,
                 link:"/receptionist-appoinments"
+            },
+            {
+                text:"Consaltants Details",
+                icon:<FaUserTie />,
+                link:"/receptionist-consaltants"
             },
         ]
     },

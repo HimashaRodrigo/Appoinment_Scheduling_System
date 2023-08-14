@@ -57,7 +57,7 @@ app.use("/api/v1/appoinment",requireAuth,AppoinmentRoutes);
 
 app.use("/api/v1/job-seeker",JobSeekerRoutes);
 
-app.use("/api/v1/job-category",requireAuth,JobRoutes);
+app.use("/api/v1/job-category",JobRoutes);
 
 app.use("/api/v1/user",requireAuth,UserRoutes);
 

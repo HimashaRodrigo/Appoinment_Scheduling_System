@@ -1,4 +1,4 @@
-import { ColorRing, Oval } from "react-loader-spinner";
+import { Oval } from "react-loader-spinner";
 import * as l from "./SpinnerElelments";
 const Spinner = () => {
   return (

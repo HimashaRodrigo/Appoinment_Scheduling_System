@@ -1,9 +1,9 @@
 import { useState } from "react";
-import TextFields from "../../Shared/FormElelments/TextFields";
+import TextFields from "../FormElelments/TextFields";
 import * as l from "./ViewUserElements";
-import DropDown from "../../Shared/FormElelments/DropDown";
-import FormButton from "../../Shared/FormElelments/FormButton";
-import RadioButton from "../../Shared/FormElelments/RadioButtons";
+import DropDown from "../FormElelments/DropDown";
+import FormButton from "../FormElelments/FormButton";
+import RadioButton from "../FormElelments/RadioButtons";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 const ViewUser = ({data1}) => {
@@ -19,10 +19,10 @@ const ViewUser = ({data1}) => {
     const userEmail = event.target.value;
     setEmail(userEmail);
     
-   data1.map((user) => {
+   data1.map( (user) => {
     console.log(userEmail);
     console.log(user.Email);
-      if (user.Email == userEmail) {
+      if (user.Email === userEmail) {
         console.log(user);
         setName(user.Name);
         setContactNumber(user.ContactNumber);
@@ -72,16 +72,16 @@ const ViewUser = ({data1}) => {
       </l.SearchFieldSection>
       <l.UserDetailsSection>
         <l.InputFeild1>
-            <TextFields Value={Email} setValue={setEmail}/>
+            <TextFields Value={Email} setValue={setEmail} placeholder={"Email"}/>
         </l.InputFeild1>
         <l.InputFeild1>
-            <TextFields Value={Name} setValue={setName}/>
+            <TextFields Value={Name} setValue={setName} placeholder={"Name"}/>
         </l.InputFeild1>
         <l.InputFeild1>
-            <TextFields Value={ContactNumber} setValue={setContactNumber}/>
+            <TextFields Value={ContactNumber} setValue={setContactNumber} placeholder={"Contact Number"}/>
         </l.InputFeild1>
         <l.InputFeild1>
-            <TextFields Value={Gender} setValue={setGender}/>
+            <TextFields Value={Gender} setValue={setGender} placeholder={"Gender"}/>
         </l.InputFeild1>
         <l.InputFeild1>
             <DropDown Value={Role} setValue={setRole} menuItems={menuValues} defaultValue={Role}/>

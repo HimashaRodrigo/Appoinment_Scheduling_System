@@ -3,7 +3,6 @@ import TextFields from "../FormElelments/TextFields";
 import * as l from "./UserProfileElements";
 import PhoneNumberInputField from "../FormElelments/PhoneNumberField";
 import DropDown from "../FormElelments/DropDown";
-import ClipLoader from "react-spinners/ClipLoader";
 import useAuth from "../../../hooks/useAuth";
 import { FaCamera } from "react-icons/fa";
 import PasswordFields from "../FormElelments/PasswordFields";
@@ -12,13 +11,12 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import HeadingComponent from "../FormElelments/Heading";
 const UserProfile = () => {
-  const { user, loadUser, loading } = useAuth();
+  const { user, loadUser } = useAuth();
   console.log(user);
   const [Email, setEmail] = useState(user.Email);
   const [Name, setName] = useState(user.Name);
   const [ContactNumber, setContactNumber] = useState(user.ContactNumber);
   const [Gender, setGender] = useState(user.Gender);
-  const Status = "Active";
   const [CurrentPassword, setCurrentPassword] = useState("");
   const [NewPassword, setNewPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
@@ -32,12 +30,12 @@ const UserProfile = () => {
   const UpdateProfile = async(e)=>{
     e.preventDefault();
     try {
-      const formData = new FormData;
-      formData.append("image",image);
-      formData.append("Name",Name);
-      formData.append("Email",Email);
-      formData.append("ContactNumber",ContactNumber);
-      formData.append("Gender",Gender);
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("Name", Name);
+      formData.append("Email", Email);
+      formData.append("ContactNumber", ContactNumber);
+      formData.append("Gender", Gender);
       console.log(formData);
       await toast.promise(
         axios.patch(`/api/v1/user/${id}`, formData),

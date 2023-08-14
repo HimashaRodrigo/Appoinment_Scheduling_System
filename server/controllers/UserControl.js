@@ -95,7 +95,7 @@ export const getUsers = async (req, res) => {
   try {
     const user = req.user;
     console.log(user);
-    if (user.Role === "Admin") {
+    if (user.Role === "Admin" || user.Role === "Receptionist") {
       const sysUsers = await User.find();
       const jobSeekers = await JobSeeker.find();
       let Users = [];
