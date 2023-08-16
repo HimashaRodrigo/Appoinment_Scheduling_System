@@ -27,11 +27,19 @@ const LoginAndSignupComponent = () => {
       setChange(true);
     }
   };
-  const { RegisterUser, logingUser, user, loading, isAuthenticated } = useAuth();
+  const { RegisterUser, logingUser, user, loading, isAuthenticated } =
+    useAuth();
 
   const navigate = useNavigate();
 
-  const formData = { Name, Email, Password, ConfirmPassword, ContactNumber, Gender };
+  const formData = {
+    Name,
+    Email,
+    Password,
+    ConfirmPassword,
+    ContactNumber,
+    Gender,
+  };
   const SignupSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -155,10 +163,12 @@ const LoginAndSignupComponent = () => {
                 </l.InputFeild>
               </l.InputSection>
               <l.FrogotPassword>
-                <l.P1>Forgot Your Password ?</l.P1>
+                <Link className="btn" to="/forgot-password">
+                  <l.P1>Forgot Your Password ?</l.P1>
+                </Link>
               </l.FrogotPassword>
               <l.ButtonSection>
-              <FormButton text={"Login"} onAction={loginSubmit}/>
+                <FormButton text={"Login"} onAction={loginSubmit} />
               </l.ButtonSection>
               <l.Option>
                 <l.P2>
@@ -199,7 +209,7 @@ const LoginAndSignupComponent = () => {
                   <l.Label1>
                     <l.LabelText>Contact Number</l.LabelText>
                   </l.Label1>
-                  <PhoneNumberInputField 
+                  <PhoneNumberInputField
                     value={ContactNumber}
                     setvalue={setContactNumber}
                     placeholder={"Enter the contact number"}
@@ -239,7 +249,7 @@ const LoginAndSignupComponent = () => {
                 </l.InputFeild>
               </l.InputSection1>
               <l.ButtonSection1>
-                <FormButton text={"SignUp"} onAction={SignupSubmit}/>
+                <FormButton text={"SignUp"} onAction={SignupSubmit} />
               </l.ButtonSection1>
               <l.Option>
                 <l.P2>

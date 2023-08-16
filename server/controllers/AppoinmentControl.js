@@ -127,7 +127,7 @@ export const AddAppoinment = async (req, res) => {
 export const getAppoinments = async (req, res) => {
   try {
     const user = req.user;
-    if (user.Role === "Receptionist") {
+    if (user.Role !== "Admin") {
       const findAppoinments = await Appoinment.find();
       console.log(findAppoinments);
       if (findAppoinments !== null) {

@@ -2,18 +2,11 @@ import JobSeeker from "../models/JobSeeker.js";
 import User from "../models/Users.js";
 import multer from "multer";
 
-const imageStorage = multer.diskStorage({
-  destination: "Images/Users",
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "_" + file.originalname);
-  },
-});
 
-export const image = multer({ storage: imageStorage }).single("image");
 
 export const updateAccount = async (id, req) => {
   try {
-    const { Name, image, Email, ContactNumber, Gender } = req.body;
+    const { Name, Email, ContactNumber, Gender } = req.body;
     console.log(req.body);
     let Model, updatedUser;
 
@@ -33,7 +26,6 @@ export const updateAccount = async (id, req) => {
       Email: Email,
       ContactNumber: ContactNumber,
       Gender: Gender,
-      ProfileImage: req.file ? req.file.filename : image,
     };
 
     updatedUser = await Model.findByIdAndUpdate(id, data, { new: true });

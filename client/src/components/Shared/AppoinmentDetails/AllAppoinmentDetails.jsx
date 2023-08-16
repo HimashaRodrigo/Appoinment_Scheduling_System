@@ -3,20 +3,22 @@ import { Link } from "react-router-dom";
 import { AiFillEye } from "react-icons/ai";
 import useAuth from "../../../hooks/useAuth";
 import { BsPlusCircleFill } from "react-icons/bs";
-const AllAppoinmentDetails = ({data}) => {
-    const {user} = useAuth();
-    return ( 
-        <l.Container>
-      <l.NewJob>
-        <Link className="btn" to="/receptionist-place-appoinment">
-          <l.AddJobBar>
-            <l.Icon1>
-              <BsPlusCircleFill />
-            </l.Icon1>
-            <l.Text>Make An Appoinment</l.Text>
-          </l.AddJobBar>
-        </Link>
-      </l.NewJob>
+const AllAppoinmentDetails = ({ data }) => {
+  const { user } = useAuth();
+  return (
+    <l.Container>
+      {user.Role === "Receptionist" ? (
+        <l.NewJob>
+          <Link className="btn" to="/receptionist-place-appoinment">
+            <l.AddJobBar>
+              <l.Icon1>
+                <BsPlusCircleFill />
+              </l.Icon1>
+              <l.Text>Make An Appoinment</l.Text>
+            </l.AddJobBar>
+          </Link>
+        </l.NewJob>
+      ) : null}
       <l.JobDetails>
         <l.Table>
           <l.Tr>
@@ -50,7 +52,7 @@ const AllAppoinmentDetails = ({data}) => {
         </l.Table>
       </l.JobDetails>
     </l.Container>
-     );
-}
- 
+  );
+};
+
 export default AllAppoinmentDetails;

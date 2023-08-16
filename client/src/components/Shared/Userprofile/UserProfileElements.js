@@ -101,3 +101,9 @@ export const ButtonSection = styled.div`
   justify-content: right;
   align-items: center;
 `;
+
+export const ButtonSection1 = styled(ButtonSection)`
+  justify-content: center;
+  right: 0;
+  margin-top: 2%;
+`

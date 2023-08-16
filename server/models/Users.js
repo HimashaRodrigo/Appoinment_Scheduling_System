@@ -29,7 +29,7 @@ const UserSchema = mongoose.Schema(
       },
     },
     ContactNumber: {
-      type: Number,
+      type: String
     },
     Gender: {
       type: String,

@@ -19,7 +19,6 @@ const AuthState = (props) => {
     error: null,
   };
   const [state, dispatch] = useReducer(AuthReducer, initial);
-  console.log("trest");
   //user logout
   const logout = async () => {
     dispatch({ type: SET_LOADING });

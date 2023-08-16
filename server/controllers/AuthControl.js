@@ -3,6 +3,16 @@ import User from "../models/Users.js";
 import { GeneratePassword, GenerateSalt, createToken, transporter, validatePassword } from "../utils/AuthUtil.js";
 import path from "path";
 import ejs from "ejs";
+import multer from "multer";
+
+const imageStorage = multer.diskStorage({
+  destination: "Images/Users",
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "_" + file.originalname);
+  },
+});
+
+const image = multer({ storage: imageStorage }).single("image");
 
 const __dirname = path
   .dirname(path.dirname(new URL(import.meta.url).pathname))
@@ -238,7 +248,7 @@ export const ForgotPassword = async (req, res) => {
       if(Password === ConfirmPassword){
         if (jobseeker) {
           const updateJobSeekerPwd = await JobSeeker.findByIdAndUpdate(
-            customer.id,
+            jobseeker.id,
             {
               Password: encryptedPassword,
             },
@@ -254,7 +264,7 @@ export const ForgotPassword = async (req, res) => {
         } else if (sysUser) {
           const updateUserPwd =
             await User.findByIdAndUpdate(
-              customer.id,
+              sysUser.id,
               {
                 Password: encryptedPassword,
               },
@@ -278,6 +288,69 @@ export const ForgotPassword = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "Server Error",
+      message: error.message,
+    });
+  }
+};
+
+// Method : POST
+// End Point : "api/v1/auth/profile-image";
+// Description : Upload Profile Image
+
+export const UploadProfileImage = async (req, res) => {
+  try {
+    const user = req.user;
+    const findJobSeeker = await JobSeeker.findOne({
+      Email: user.Email,
+    });
+    const findUser = await User.findOne({ Email: user.Email });
+    if (findJobSeeker) {
+      image(req, res, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          findJobSeeker.ProfileImage = req.file.filename;
+        }
+      });
+      const uploadJobSeekerImage = await findJobSeeker.save();
+      const updateJobSeeker = await JobSeeker.findByIdAndUpdate(
+        findJobSeeker.id,
+        uploadJobSeekerImage,
+        { new: true }
+      );
+      res.status(201).json({
+        message: "JobSeeker Profile Image Uploaded",
+        data: {
+          updateJobSeeker,
+        },
+      });
+    } else if (findUser) {
+      image(req, res, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          findUser.ProfileImage = req.file.filename;
+        }
+      });
+      const uploadUserImage = await findUser.save();
+      const updateUser = await User.findByIdAndUpdate(
+        findUser.id,
+        uploadUserImage,
+        { new: true }
+      );
+      res.status(201).json({
+        message: "User Profile Image Uploaded",
+        data: {
+          updateUser,
+        },
+      });
+    } else {
+      res.status(404).json({
+        message: "No user exist",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
       message: error.message,
     });
   }

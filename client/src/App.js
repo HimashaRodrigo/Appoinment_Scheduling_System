@@ -20,6 +20,7 @@ import { BackRoutes } from "./data/BackRoutes";
 import AdminJobCategories from "./pages/Admin/Admin_Job_Categories";
 import AdminAddJob from "./pages/Admin/Admin_Add_Job_Category";
 import ReceptionistConsaltantDetails from "./pages/Receptionist/Receptionist_View_Consaltant_Details";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Toaster position="top-center" reverseOrder={false} />
           <Routes>
             <Route path="/" element={<LoginAndSignupComponent />}/>
+            <Route path="/forgot-password" element={<ForgotPassword />}/>
 
             {/* ++++++++++++++++++++++++++++++++++++++++++++++ Admin +++++++++++++++++++++++++++++++++++++++++++++ */}
             <Route path="/admin-profile" element={<AdminProfile menuItems={DashBoardLinks[0].Navs}/>}/>

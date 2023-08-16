@@ -9,6 +9,7 @@ const DashBoard = ({ rightContainer, menuItems, backRoutes }) => {
       logout();
     }
   };
+  console.log(user);
   return (
     <l.Container>
       <l.Body>

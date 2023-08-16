@@ -20,7 +20,7 @@ const DropDown = ({ placeholder, Value, setValue, menuItems,defaultValue }) => {
     >
       {menuItems.map((data)=>{
         return(
-            <option value={data}>{data}</option>
+            <option value={data} selected>{data}</option>
         )
       })}
     </Select>
