@@ -6,8 +6,9 @@ const PORT = 5000;
 
 mongoose.set("strictQuery",false);
 mongoose.connect(mongoDB).then(()=>{
-    console.log(`Serve is listning to port ${PORT}`);
-    app.listen(500);
+    console.log(`Server is listning to port ${PORT}`);
+    app.listen(PORT);
 }).catch((err)=>{
     console.log(err);
 })
+

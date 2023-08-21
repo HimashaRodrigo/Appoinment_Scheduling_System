@@ -1,40 +1,80 @@
 import mongoose from "mongoose";
+import validator from "validator";
 
 const JobSeekerSchema = mongoose.Schema(
-    {
-        Name:{
-            type:String,
+  {
+    Appoinment:{
+      type:mongoose.Schema.ObjectId,
+      ref:"Appoinment"
+    },
+    Name: {
+      type: String,
+      required:[true,"Name is required!"]
+    },
+    ProfileImage: {
+      type: String,
+    },
+    Email: {
+      type: String,
+      required: [true, "Please enter the email"],
+      unique: true,
+      validate: {
+        validator: (val) => {
+          return validator.isEmail(val);
         },
-        Email:{
-            type:String,
-            required:[true,'Please enter the email'],
-            unique:true,
-            validate:{
-                validator:(val)=>{
-                    return validator.isEmail(val);
-                },
-                message: "Please enter the valid email"
-            }
+        message: "Please enter the valid email",
+      },
+    },
+    Role: {
+      type: String,
+      required: true,
+      default:"Job Seeker",
+      immutable: true,
+    },
+    Password: {
+      type: String,
+      minlength: 8,
+      unique: true,
+    },
+    ContactNumber: {
+      type: String,
+      required:[true,"Contact number is required!"]
+    },
+    ConfirmPassword: {
+      type: String,
+      select: false,
+      validate: {
+        validator: function (pwd) {
+          return this.Password === pwd;
         },
-        Role:{
-            type:String,
-            required:true,
-            enums:{
-                values:["Job Seeker"],
-                message:"User role must be one of : ['Job Seeker']"
-            },
-            immutable:true
-        },
-        ContactNumber:{
-            type:Number,
-        },
-        Gender:{
-            type:String,
-            enum:{
-                values:["Male","Female"],
-                message : "Gender must be one of:['Male','Female']"
-            },
-            immutable:true
-        }
-    }
-)
+        message: "Password doesn't match",
+      },
+    },
+    Gender: {
+      type: String,
+      enum: {
+        values: ["Male", "Female"],
+        message: "Gender must be one of:['Male','Female']",
+      }
+    },
+    Status:{
+      type:String,
+      required:[true,"Status is required!"],
+      enum:{
+        values:["Active","Deactive"]
+      },
+      default:"Active"
+    },
+  },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: { virtuals: true },
+    timestamps: true,
+  }
+);
+
+const JobSeeker = mongoose.model('JobSeeker',JobSeekerSchema);
+
+export default JobSeeker;
