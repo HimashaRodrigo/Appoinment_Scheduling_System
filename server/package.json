@@ -5,8 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js",
-    "postinstall": "if [ $(uname) == 'Linux' ]; then npm uninstall fsevents; fi"
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import app from "./app.js";
 
-const mongoDB = "mongodb+srv://acfernando1999:9tip9QsrEzfpDTPa@cluster0.9zyyong.mongodb.net/?retryWrites=true&w=majority";
+const mongoDB = "mongodb+srv://himasharodrigo1998:Ha5o68aesYgysTNb@cluster0.dttmmiz.mongodb.net/?retryWrites=true&w=majority";
 const PORT = 5000;
 
 mongoose.set("strictQuery",false);
