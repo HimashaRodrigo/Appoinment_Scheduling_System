@@ -6,12 +6,12 @@ export const DashBoardLinks = [
         Role:"Admin",
         Navs:[
             {
-                text:"Add User",
+                text:"Add Employees",
                 icon:<BsPersonPlusFill />,
                 link:"/admin-add-user"
             },
             {
-                text:"View User",
+                text:"View Employees",
                 icon: <BsPersonFill/>,
                 link: "/admin-view-user"
             },

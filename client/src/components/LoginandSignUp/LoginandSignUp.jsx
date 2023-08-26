@@ -15,7 +15,7 @@ const LoginAndSignupComponent = () => {
   const [Email, setEmail] = useState("");
   const [Name, setName] = useState("");
   const [ContactNumber, setContactNumber] = useState("");
-  const [Gender, setGender] = useState("");
+  const [Gender, setGender] = useState("Male");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const menuItems = ["Male", "Female"];
@@ -43,18 +43,20 @@ const LoginAndSignupComponent = () => {
   const SignupSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
       toast.promise(
         RegisterUser(formData),
         {
           loading: "Registering.....",
-          success: (data) => `User Registered Successfully`,
+          success: (data) => {
+            console.log(data);
+            return `${data.data?.message}` || "User Registered Successfully";
+          },
           error: (err) => {
-            console.log(err.response);
+            console.log(err);
             if (!err?.response?.data?.message) {
               return "Something went wrong! Try again";
             }
-            return `${err.response.data.message}`;
+            return `${err?.response?.data?.message}`;
           },
         },
         {
@@ -127,7 +129,7 @@ const LoginAndSignupComponent = () => {
     <l.Container>
       <l.Section1>
         <l.HeaderContainer>
-          <l.Header>Appointment Scheduling System</l.Header>
+          <l.Header>The Jobs</l.Header>
         </l.HeaderContainer>
       </l.Section1>
       <l.Section1>
@@ -224,7 +226,6 @@ const LoginAndSignupComponent = () => {
                     Value={Gender}
                     setValue={setGender}
                     menuItems={menuItems}
-                    defaultValue={"Male"}
                   />
                 </l.InputFeild>
                 <l.InputFeild>

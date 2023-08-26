@@ -61,7 +61,6 @@ const AuthState = (props) => {
     dispatch({ type: SET_LOADING });
     try {
       const res = await axios.post("api/v1/job-seeker", formData);
-      console.log(res);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,

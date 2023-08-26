@@ -15,7 +15,7 @@ const DashBoard = ({ rightContainer, menuItems, backRoutes }) => {
       <l.Body>
         <l.LeftContainer>
           <l.HeadingContainer>
-            <l.Heading>Appointment Scheduling System</l.Heading>
+            <l.Heading>The Jobs</l.Heading>
           </l.HeadingContainer>
           <l.Menu>
             {menuItems.map((data) => {

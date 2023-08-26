@@ -32,11 +32,11 @@ const AppoinmentSchema = mongoose.Schema(
             type:String,
             required:[true,"Status Should Be Available"],
              enum:{
-                values:["Placed","Cancelled"],
-                message:"Status Must Be Placed Or Not Cancelled"
+                values:["Placed","Cancelled","Finished"],
+                message:"Status Must Be Placed,Finished Or Cancelled"
              },
              default:"Placed"
-        }
+        },
     },
     {
         toJSON:{

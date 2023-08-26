@@ -5,7 +5,7 @@ import useFetch from "../../hooks/useFetch";
 
 const ReceptionistAppoinmentDetails = ({menuItems,backRoutes}) => {
     const{data,isPending} = useFetch('api/v1/appoinment/');
-    console.log(data?.data?.Appoinments);
+    console.log(data);
     const appoinments = data?.data?.Appoinments
     return ( 
         <>

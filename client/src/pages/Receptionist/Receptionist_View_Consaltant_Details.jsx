@@ -12,6 +12,7 @@ const ReceptionistConsaltantDetails = ({menuItems,backRoutes}) => {
         }
     })
     const Consaltant = filteredConsaltants;
+    console.log(Consaltant);
     return ( 
         <>
             <DashBoard menuItems={menuItems} backRoutes={backRoutes} rightContainer={
