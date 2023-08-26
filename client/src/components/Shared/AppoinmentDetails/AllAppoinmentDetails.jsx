@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AiFillEye } from "react-icons/ai";
 import useAuth from "../../../hooks/useAuth";
 import { BsPlusCircleFill } from "react-icons/bs";
+import { TiTick } from "react-icons/ti";
 const AllAppoinmentDetails = ({ data }) => {
   const { user } = useAuth();
   return (
@@ -28,6 +29,7 @@ const AllAppoinmentDetails = ({ data }) => {
             <l.Th>Consaltant</l.Th>
             <l.Th>Client</l.Th>
             <l.Th>Job</l.Th>
+            <l.Th>Status</l.Th>
             <l.Th></l.Th>
           </l.Tr>
           {data.map((row) => {
@@ -39,8 +41,21 @@ const AllAppoinmentDetails = ({ data }) => {
                 <l.Td>{row.ConsaltantEmail}</l.Td>
                 <l.Td>{row.JobSeekerName}</l.Td>
                 <l.Td>{row.Job}</l.Td>
+                <l.Td>{row.Status}</l.Td>
                 {user.Role === "Receptionist" ? (
-                  <Link to={`/admin-job-details/${row.id}`} className="btn">
+                  <Link
+                    to={`/receptionist-appoinments/${row.id}`}
+                    className="btn"
+                  >
+                    <l.Icon>
+                      <AiFillEye />
+                    </l.Icon>
+                  </Link>
+                ) : user.Role === "Consaltant" ? (
+                  <Link
+                    to={`/consaltant-appoinments/${row.id}`}
+                    className="btn"
+                  >
                     <l.Icon>
                       <AiFillEye />
                     </l.Icon>

@@ -72,6 +72,7 @@ export const Tr = styled.tr`
   height: 30px;
   display: flex;
   width: 100%;
+  padding: 2% 0;
   justify-content: space-around;
   @media screen and (max-width: 769px) {
     font-size: 90%;
@@ -84,6 +85,7 @@ export const Tr = styled.tr`
 export const Th = styled.th`
   border-bottom: 2px solid #000;
   width: 100%;
+  font-size: 14px;
   @media screen and (max-width: 769px) {
     margin-bottom: 10px;
     padding-bottom: 10px;
@@ -98,6 +100,14 @@ export const Td = styled.td`
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: none;
+  }
+`;
+export const rightIcon = styled.div`
+  & {
+    color: red;
+  }
+  &:hover {
+    cursor: pointer;
   }
 `;
 export const Icon = styled.div`

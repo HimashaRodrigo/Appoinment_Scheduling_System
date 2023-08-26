@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 import validator from "validator";
 const UserSchema = mongoose.Schema(
   {
+    Appoinment:{
+      type:mongoose.Schema.ObjectId,
+      ref:"Appoinment"
+    },
     Name: {
       type: String,
     },
@@ -56,7 +60,7 @@ const UserSchema = mongoose.Schema(
       enum:{
         values:["Available","Not Available"]
       },
-    },
+    }
   },
   {
     toJSON: {

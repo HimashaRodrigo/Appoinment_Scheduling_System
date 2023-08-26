@@ -32,7 +32,7 @@ const JobCategoryDetails = ({ data }) => {
                 <l.Td>{row.AvgSalary}</l.Td>
                 <l.Td>{row.Status}</l.Td>
                 {user.Role === "Admin" ? (
-                  <Link to={`/admin-job-details/${row.id}`} className="btn">
+                  <Link to={`/admin-job-category-details/${row.id}`} className="btn">
                     <l.Icon>
                       <AiFillEye />
                     </l.Icon>

@@ -8,7 +8,7 @@ export const updateAccount = async (id, req) => {
   try {
     const { Name, Email, ContactNumber, Gender } = req.body;
     console.log(req.body);
-    let Model, updatedUser;
+    let Model, updatedUser,Country;
 
     const jobSeeker = await JobSeeker.findById(id);
     const sysUser = await User.findById(id);
@@ -20,7 +20,6 @@ export const updateAccount = async (id, req) => {
     } else {
       return "User doesn't exist!";
     }
-
     const data = {
       Name: Name,
       Email: Email,

@@ -7,7 +7,7 @@ const TextFeild = styled.input`
   padding: 0 5%;
   background-color: #dfeefc;
 `;
-const TextFields = ({ placeholder, Value, setValue, required }) => {
+const TextFields = ({ placeholder, Value, setValue, required, disabled }) => {
   return (
     <TextFeild
       required={required}
@@ -15,6 +15,7 @@ const TextFields = ({ placeholder, Value, setValue, required }) => {
       value={Value}
       onChange={(e) => setValue(e.target.value)}
       placeholder={placeholder || "placeholder"}
+      disabled = {false || disabled}
     />
   );
 };

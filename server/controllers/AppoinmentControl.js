@@ -3,6 +3,7 @@ import Appoinment from "../models/Appoinment.js";
 import JobSeeker from "../models/JobSeeker.js";
 import User from "../models/Users.js";
 import JobCategory from "../models/Jobs.js";
+import { GeneratePassword, GenerateSalt } from "../utils/AuthUtil.js";
 
 // Method : POST
 // End Point : "api/v1/appoinment";
@@ -38,7 +39,7 @@ export const AddAppoinment = async (req, res) => {
 
       let newAppoinment, createJobSeeker;
 
-      if (findJobSeeker) {
+      if (findJobSeeker != null) {
         newAppoinment = await Appoinment.create(
           [
             {
@@ -52,27 +53,15 @@ export const AddAppoinment = async (req, res) => {
           ],
           { session }
         );
-
         await JobSeeker.findByIdAndUpdate(
           findJobSeeker.id,
           { Appoinment: newAppoinment.id },
-          { session }
-        );
+          { new: true }
+        ).session(session);
       } else {
-        newAppoinment = await Appoinment.create(
-          [
-            {
-              Consaltant: findConsaltant.id,
-              JobSeeker: createJobSeeker.id,
-              Job: findJob.id,
-              Date: Date,
-              Time: Time,
-              AppoinmentNo: AppoinmentNo,
-            },
-          ],
-          { session }
-        );
-
+        const Password = "12345678";
+        const salt = await GenerateSalt();
+        const encryptPassword = await GeneratePassword(Password, salt);
         createJobSeeker = await JobSeeker.create(
           [
             {
@@ -80,18 +69,38 @@ export const AddAppoinment = async (req, res) => {
               ContactNumber,
               Gender,
               Email,
-              Appoinment: newAppoinment.id,
+              Password: encryptPassword,
             },
           ],
           { session }
         );
+        if (createJobSeeker != null) {
+          newAppoinment = await Appoinment.create(
+            [
+              {
+                Consaltant: findConsaltant.id,
+                JobSeeker: createJobSeeker[0].id,
+                Job: findJob.id,
+                Date: Date,
+                Time: Time,
+                AppoinmentNo: AppoinmentNo,
+              },
+            ],
+            { session }
+          );
+          await JobSeeker.findByIdAndUpdate(
+            createJobSeeker.id,
+            { Appoinment: newAppoinment.id },
+            { new: true }
+          ).session(session);
+        }
       }
 
       await User.findByIdAndUpdate(
         findConsaltant.id,
-        { Availability: "Not Available" },
-        { session }
-      );
+        { Availability: "Not Available", Appoinment: newAppoinment[0].id },
+        { new: true }
+      ).session(session);
 
       await session.commitTransaction();
       session.endSession();
@@ -101,7 +110,6 @@ export const AddAppoinment = async (req, res) => {
         message: "Appointment is placed",
         data: {
           newAppoinment,
-          createJobSeeker,
         },
       });
     } catch (error) {
@@ -129,7 +137,6 @@ export const getAppoinments = async (req, res) => {
     const user = req.user;
     if (user.Role !== "Admin") {
       const findAppoinments = await Appoinment.find();
-      console.log(findAppoinments);
       if (findAppoinments !== null) {
         let Appoinments = [];
         for (const appoinment of findAppoinments) {
@@ -155,10 +162,13 @@ export const getAppoinments = async (req, res) => {
             const Job = populatedAppoinment.Job.Name;
             const AverageSalary = populatedAppoinment.Job.AvgSalary;
             const JobSeekerName = populatedAppoinment.JobSeeker.Name;
+            const JobSeekerEmail = populatedAppoinment.JobSeeker.Email;
             const JobSeekerContactNo =
               populatedAppoinment.JobSeeker.ContactNumber;
             const AppoinmentNo = populatedAppoinment.AppoinmentNo;
+            const Status = populatedAppoinment.Status;
             appoinmentDetails = {
+              id:populatedAppoinment.id,
               AppoinmentNo: AppoinmentNo,
               ConsaltantName: ConsaltantName,
               ConsaltantEmail: ConsaltantEmail,
@@ -166,8 +176,10 @@ export const getAppoinments = async (req, res) => {
               AverageSalary: AverageSalary,
               JobSeekerName: JobSeekerName,
               JobSeekerContactNo: JobSeekerContactNo,
+              JobSeekerEmail:JobSeekerEmail,
               Date: populatedAppoinment.Date,
               Time: populatedAppoinment.Time,
+              Status:Status
             };
             Appoinments.push(appoinmentDetails);
           } catch (error) {
@@ -177,6 +189,7 @@ export const getAppoinments = async (req, res) => {
             });
           }
         }
+        console.log(Appoinments);
         return res.status(200).json({
           status: "SUCCESS",
           data: {
@@ -196,12 +209,7 @@ export const getAppoinments = async (req, res) => {
         message: "User Have No Authorization to do this action",
       });
     }
-  } catch (error) {
-   res.status(500).json({
-      status: "Server Error",
-      message: error.message,
-    });
-  }
+  } catch (error) {}
 };
 
 // Method : GET
@@ -210,7 +218,7 @@ export const getAppoinments = async (req, res) => {
 export const getAppoinmentById = async (req, res) => {
   try {
     const user = req.user;
-    if (user.Role === "Receptionist") {
+    if (user.Role === "Receptionist" || user.Role === "Consaltant") {
       const { id } = req.params;
       let Appoinments = [];
       let appoinmentDetails;
@@ -352,6 +360,86 @@ export const cancelAppoinment = async (req, res) => {
         status: "Error",
         message: error.message,
       });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+};
+
+// Method : PATCH
+// End Point : "api/v1/appoinment/close/:id";
+// Description : Finish an appoinment
+export const finishAppoinment = async (req, res) => {
+  try {
+    const user = req.user;
+    const { id } = req.params;
+    if (user.Role === "Consaltant") {
+      const session = await mongoose.startSession();
+      try {
+        session.startTransaction();
+        const populatedAppoinment = await Appoinment.findById(id)
+          .populate({
+            path: "Consaltant",
+            model: "User",
+          })
+          .populate({
+            path: "Job",
+            model: "Job",
+          })
+          .populate({
+            path: "JobSeeker",
+            model: "JobSeeker",
+          })
+          .exec();
+        if (populatedAppoinment) {
+          const consaltantID = populatedAppoinment.Consaltant.id;
+          const jobseekerID = populatedAppoinment.JobSeeker.id;
+          const updateAppoinment = await Appoinment.findByIdAndUpdate(
+            id,
+            { Status: "Finished" },
+            { new: true }
+          ).session(session);
+
+          await User.findByIdAndUpdate(
+            consaltantID,
+            { Appoinment: null },
+            { new: true }
+          ).session(session);
+          await JobSeeker.findByIdAndUpdate(
+            jobseekerID,
+            { Appoinment: null },
+            { new: true }
+          ).session(session);
+
+          await session.commitTransaction();
+          session.endSession();
+
+          return res.status(201).json({
+            status: "Success",
+            message: "Appointment is closed",
+            data: {
+              updateAppoinment,
+            },
+          });
+        }
+        else{
+          return res.status(404).json({
+            status: "Error",
+            message: "Appoinment Not Found",
+          });
+        }
+      } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+
+        return res.status(500).json({
+          status: "Error",
+          message: error.message,
+        });
+      }
     }
   } catch (error) {
     return res.status(500).json({

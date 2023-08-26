@@ -14,6 +14,7 @@ export const createSeekerAccount = async (req, res) => {
   try {
     const { Name, Email, ContactNumber, Password, ConfirmPassword, Gender } =
       req.body;
+      console.log(req.body);
     const seeker = await JobSeeker.findOne({ Email: Email });
     if (seeker) {
       res.status(400).json({
@@ -34,7 +35,7 @@ export const createSeekerAccount = async (req, res) => {
               Gender: Gender,
             });
             const token = createToken(User._id, User.Email);
-            res.status(200).json({
+            return res.status(200).json({
               status: "Success",
               message: "User Account Created Successfully",
               data: {
@@ -42,27 +43,27 @@ export const createSeekerAccount = async (req, res) => {
               },
             });
           } else {
-            res.status(400).json({
+            return res.status(400).json({
               status: "ERROR",
               message: "Password Confirmation doesn't match",
             });
           }
         }else{
-          res.status(400).json({
+          return res.status(400).json({
             status: "ERROR",
             message: "Password must have at least 8 characters!",
           });
         }
       }
       else{
-        res.status(400).json({
+        return res.status(400).json({
           status: "ERROR",
           message: "Password field must be filled!",
         });
       }
     }
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "Server error",
       message: error.message,
     });

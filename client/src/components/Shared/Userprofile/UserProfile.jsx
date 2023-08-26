@@ -163,7 +163,6 @@ const UserProfile = ({data}) => {
           </l.InputFeild1>
           <l.InputFeild1>
             <DropDown
-              defaultValue={"Male"}
               placeholder={"Select gender"}
               Value={Gender}
               setValue={setGender}
