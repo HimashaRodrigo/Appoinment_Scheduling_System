@@ -9,7 +9,7 @@ const ConsaltantViewAppoinments = ({menuItems,backRoutes}) => {
     const{data,isPending} = useFetch('api/v1/appoinment/');
     const filteredAppoinments = [];
     data?.data?.Appoinments.map((data)=>{
-        if(user.Email === data.ConsaltantEmail){
+        if(user.Email === data.ConsaltantEmail && data.Status !== "Cancelled"){
             filteredAppoinments.push(data);
         }
     })

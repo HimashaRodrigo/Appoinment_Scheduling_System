@@ -48,8 +48,7 @@ const LoginAndSignupComponent = () => {
         {
           loading: "Registering.....",
           success: (data) => {
-            console.log(data);
-            return `${data.data?.message}` || "User Registered Successfully";
+            return "User Registered Successfully";
           },
           error: (err) => {
             console.log(err);

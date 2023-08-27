@@ -14,7 +14,6 @@ export const createSeekerAccount = async (req, res) => {
   try {
     const { Name, Email, ContactNumber, Password, ConfirmPassword, Gender } =
       req.body;
-      console.log(req.body);
     const seeker = await JobSeeker.findOne({ Email: Email });
     if (seeker) {
       res.status(400).json({
@@ -34,6 +33,7 @@ export const createSeekerAccount = async (req, res) => {
               Password: encryptPassword,
               Gender: Gender,
             });
+            console.log(User);
             const token = createToken(User._id, User.Email);
             return res.status(200).json({
               status: "Success",

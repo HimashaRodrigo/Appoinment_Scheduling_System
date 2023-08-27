@@ -76,7 +76,6 @@ export const Tr = styled.tr`
   justify-content: space-around;
   @media screen and (max-width: 769px) {
     font-size: 90%;
-
     /* border:none;
        padding:10px; */
   }
@@ -85,7 +84,7 @@ export const Tr = styled.tr`
 export const Th = styled.th`
   border-bottom: 2px solid #000;
   width: 100%;
-  font-size: 14px;
+  font-size: 12px;
   @media screen and (max-width: 769px) {
     margin-bottom: 10px;
     padding-bottom: 10px;
