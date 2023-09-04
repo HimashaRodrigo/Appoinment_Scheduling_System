@@ -11,7 +11,7 @@ export const DashBoardLinks = [
                 link:"/admin-add-user"
             },
             {
-                text:"View Employees",
+                text:"View Users",
                 icon: <BsPersonFill/>,
                 link: "/admin-view-user"
             },
@@ -31,7 +31,7 @@ export const DashBoardLinks = [
                 link:"/receptionist-appoinments"
             },
             {
-                text:"Consaltants Details",
+                text:"Consultant/Job Seeker Details",
                 icon:<FaUserTie />,
                 link:"/receptionist-consaltants"
             },

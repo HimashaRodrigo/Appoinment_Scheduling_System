@@ -8,8 +8,8 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 const AddUser = () => {
   const [Email, setEmail] = useState("");
-  const [Role, setRole] = useState("");
-  const roles = ["Receptionist", "Consaltant"];
+  const [Role, setRole] = useState("Receptionist");
+  const roles = ["Receptionist", "Consultant"];
   const AddUser = async (e) => {
     e.preventDefault();
     try {

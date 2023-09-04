@@ -18,7 +18,7 @@ const MakeAppoinment = ({ JobSeekers, Consaltant, jobs }) => {
   const [Date, setDate] = useState();
   const [Gender, setGender] = useState("Male");
   const [Job, setJob] = useState(jobs[0].Name);
-  const [ConsaltantName, setConsaltantName] = useState(Consaltant[0].Name);
+  const [ConsaltantName, setConsaltantName] = useState();
 
   const JobNames = [];
   jobs.map((job) => {

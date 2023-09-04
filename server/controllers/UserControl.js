@@ -177,6 +177,7 @@ export const UpdateUserByAdmin = async (req, res) => {
       const {Email,Name,Gender,ContactNumber,Role,Status} = req.body;
       
       const findsysUser = await User.findOne({Email:Email}).populate("Email");
+      const findjobSeeker =  await JobSeeker.findOne({Email:Email}).populate("Email");
       
       if (findsysUser) {
         const updateUser = await User.findByIdAndUpdate(
@@ -197,6 +198,27 @@ export const UpdateUserByAdmin = async (req, res) => {
           message: `${findsysUser.Email} is updated`,
           data: {
             updateUser,
+          },
+        });
+      } else if(findjobSeeker){
+        const updateJobSeeker = await JobSeeker.findByIdAndUpdate(
+          findjobSeeker.id,
+          {
+            Name:Name,
+            Email:Email,
+            Status: Status,
+            Role:Role,
+            ContactNumber:ContactNumber,
+            Gender:Gender
+          },
+          { new: true }
+        );
+        console.log(updateJobSeeker);
+        res.status(200).json({
+          status: "Success",
+          message: `${findjobSeeker.Email} is updated`,
+          data: {
+            updateJobSeeker,
           },
         });
       }
