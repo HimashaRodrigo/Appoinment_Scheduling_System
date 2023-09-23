@@ -18,7 +18,7 @@ const MakeAppoinment = ({ JobSeekers, Consaltant, jobs }) => {
   const [Date, setDate] = useState();
   const [Gender, setGender] = useState("Male");
   const [Job, setJob] = useState(jobs[0].Name);
-  const [ConsaltantName, setConsaltantName] = useState();
+  const [ConsaltantName, setConsaltantName] = useState(Consaltant[0].Name);
 
   const JobNames = [];
   jobs.map((job) => {
@@ -47,17 +47,18 @@ const MakeAppoinment = ({ JobSeekers, Consaltant, jobs }) => {
     });
   };
   let ConsaltantEmail;
-  const getConsaltantEmail = Consaltant.map((data) => {
+  console.log(Gender);
+  Consaltant.map((data) => {
     if (ConsaltantName === data.Name) {
       ConsaltantEmail = data.Email;
     }
   });
-  console.log(ConsaltantEmail);
+  console.log(Consaltant);
   const makeAppoinment = async (e) => {
     e.preventDefault();
     try {
       const formData = {
-        Consultant: ConsaltantEmail,
+        Consaltant: ConsaltantEmail,
         Name: Name,
         Email: Email,
         ContactNumber: ContactNumber,
