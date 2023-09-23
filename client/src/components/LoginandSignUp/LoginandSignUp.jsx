@@ -114,7 +114,7 @@ const LoginAndSignupComponent = () => {
         case "Job Seeker":
           navigate("/job-seeker-profile");
           break;
-        case "Consaltant":
+        case "Consultant":
           navigate("/consaltant-profile");
           break;
         default:
