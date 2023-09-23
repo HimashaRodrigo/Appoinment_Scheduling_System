@@ -17,7 +17,7 @@ const ViewUser = ({ data1 }) => {
 
   const { user } = useAuth();
 
-  const menuValues = ["Receptionist", "Consaltant", "Job Seeker", "Admin"];
+  const menuValues = ["Receptionist", "Consultant", "Job Seeker", "Admin"];
   const handleEmailChange = (event) => {
     const userEmail = event.target.value;
     setEmail(userEmail);

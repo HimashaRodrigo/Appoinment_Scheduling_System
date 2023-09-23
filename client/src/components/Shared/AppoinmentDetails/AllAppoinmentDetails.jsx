@@ -26,7 +26,7 @@ const AllAppoinmentDetails = ({ data }) => {
             <l.Th>Appoinment No</l.Th>
             <l.Th>Date</l.Th>
             <l.Th>Time</l.Th>
-            <l.Th>Consaltant</l.Th>
+            <l.Th>Consultant</l.Th>
             <l.Th>Client</l.Th>
             <l.Th>Job</l.Th>
             <l.Th>Status</l.Th>
@@ -51,7 +51,7 @@ const AllAppoinmentDetails = ({ data }) => {
                       <AiFillEye />
                     </l.Icon>
                   </Link>
-                ) : user.Role === "Consaltant" ? (
+                ) : user.Role === "Consultant" ? (
                   <Link
                     to={`/consaltant-appoinments/${row.id}`}
                     className="btn"

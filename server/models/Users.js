@@ -27,9 +27,9 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
       enums: {
-        values: ["Admin", "Receptionist", "Consaltant"],
+        values: ["Admin", "Receptionist", "Consultant"],
         message:
-          "User role must be one of : ['Admin','Receptionist','Consaltant']",
+          "User role must be one of : ['Admin','Receptionist','Consultant']",
       },
     },
     ContactNumber: {

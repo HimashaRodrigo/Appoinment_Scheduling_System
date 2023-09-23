@@ -38,7 +38,7 @@ export const DashBoardLinks = [
         ]
     },
     {
-        Role:"Consaltant",
+        Role:"Consultant",
         Navs:[
             {
                 text:"Appoinment Details",
