@@ -30,7 +30,7 @@ export const AddAppoinment = async (req, res) => {
       const findJobSeeker = await JobSeeker.findOne({
         ContactNumber: ContactNumber,
       }).populate("ContactNumber");
-
+      
       const findConsaltant = await User.findOne({ Email: Consaltant }).populate(
         "Email"
       );
@@ -43,7 +43,7 @@ export const AddAppoinment = async (req, res) => {
         newAppoinment = await Appoinment.create(
           [
             {
-              Consaltant: findConsaltant.id,
+              Consultant: findConsaltant.id,
               JobSeeker: findJobSeeker.id,
               Job: findJob.id,
               Date: Date,
@@ -78,7 +78,7 @@ export const AddAppoinment = async (req, res) => {
           newAppoinment = await Appoinment.create(
             [
               {
-                Consaltant: findConsaltant.id,
+                Consultant: findConsaltant.id,
                 JobSeeker: createJobSeeker[0].id,
                 Job: findJob.id,
                 Date: Date,
@@ -144,7 +144,7 @@ export const getAppoinments = async (req, res) => {
           try {
             const populatedAppoinment = await Appoinment.findById(appoinment.id)
               .populate({
-                path: "Consaltant",
+                path: "Consultant",
                 model: "User",
               })
               .populate({
@@ -157,8 +157,8 @@ export const getAppoinments = async (req, res) => {
               })
               .exec();
 
-            const ConsaltantName = populatedAppoinment.Consaltant.Name;
-            const ConsaltantEmail = populatedAppoinment.Consaltant.Email;
+            const ConsaltantName = populatedAppoinment.Consultant.Name;
+            const ConsaltantEmail = populatedAppoinment.Consultant.Email;
             const Job = populatedAppoinment.Job.Name;
             const AverageSalary = populatedAppoinment.Job.AvgSalary;
             const JobSeekerName = populatedAppoinment.JobSeeker.Name;
@@ -218,14 +218,14 @@ export const getAppoinments = async (req, res) => {
 export const getAppoinmentById = async (req, res) => {
   try {
     const user = req.user;
-    if (user.Role === "Receptionist" || user.Role === "Consaltant") {
+    if (user.Role === "Receptionist" || user.Role === "Consultant") {
       const { id } = req.params;
       let Appoinments = [];
       let appoinmentDetails;
       try {
         const populatedAppoinment = await Appoinment.findById(id)
           .populate({
-            path: "Consaltant",
+            path: "Consultant",
             model: "User",
           })
           .populate({
@@ -239,8 +239,8 @@ export const getAppoinmentById = async (req, res) => {
           .exec();
 
         if (populatedAppoinment) {
-          const ConsaltantName = populatedAppoinment.Consaltant.Name;
-          const ConsaltantEmail = populatedAppoinment.Consaltant.Email;
+          const ConsaltantName = populatedAppoinment.Consultant.Name;
+          const ConsaltantEmail = populatedAppoinment.Consultant.Email;
           const Job = populatedAppoinment.Job.Name;
           const AverageSalary = populatedAppoinment.Job.AvgSalary;
           const JobSeekerName = populatedAppoinment.JobSeeker.Name;
@@ -312,7 +312,7 @@ export const cancelAppoinment = async (req, res) => {
       session.startTransaction();
       const findAppoinment = await Appoinment.findById(id)
         .populate({
-          path: "Consaltant",
+          path: "Consultant",
           model: "User",
         })
         .populate({
@@ -324,7 +324,7 @@ export const cancelAppoinment = async (req, res) => {
           model: "JobSeeker",
         })
         .exec();
-      const ConsaltantId = findAppoinment.Consaltant.id;
+      const ConsaltantId = findAppoinment.Consultant.id;
       const JobSeekerId = findAppoinment.JobSeeker.id;
       const updateAppoinment = await Appoinment.findByIdAndUpdate(
         id,
@@ -376,13 +376,13 @@ export const finishAppoinment = async (req, res) => {
   try {
     const user = req.user;
     const { id } = req.params;
-    if (user.Role === "Consaltant") {
+    if (user.Role === "Consultant") {
       const session = await mongoose.startSession();
       try {
         session.startTransaction();
         const populatedAppoinment = await Appoinment.findById(id)
           .populate({
-            path: "Consaltant",
+            path: "Consultant",
             model: "User",
           })
           .populate({
@@ -395,7 +395,7 @@ export const finishAppoinment = async (req, res) => {
           })
           .exec();
         if (populatedAppoinment) {
-          const consaltantID = populatedAppoinment.Consaltant.id;
+          const consaltantID = populatedAppoinment.Consultant.id;
           const jobseekerID = populatedAppoinment.JobSeeker.id;
           const updateAppoinment = await Appoinment.findByIdAndUpdate(
             id,
