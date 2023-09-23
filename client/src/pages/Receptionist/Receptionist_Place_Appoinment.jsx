@@ -9,8 +9,9 @@ const ReceptionistPlaceAppoinment = ({menuItems,backRoutes}) => {
     const JobSeekers = users?.data?.Users[1];
     let filteredConsaltants = [];
     let filteredjobs = [];
+    console.log(jobs?.data?.jobCategories);
     users?.data?.Users[0].map((data)=>{
-        if(data.Status !== "Deactive" && data.Role === "Consaltant"){
+        if(data.Status !== "Deactive" && data.Role === "Consultant"){
             filteredConsaltants.push(data);
         }
     })

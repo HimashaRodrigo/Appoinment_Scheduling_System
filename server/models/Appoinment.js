@@ -8,7 +8,7 @@ const AppoinmentSchema = mongoose.Schema(
             unique:true,
             immutable:true
         },
-        Consaltant:{
+        Consultant:{
             type: mongoose.Schema.ObjectId,
             ref:'User'
         },

@@ -57,7 +57,7 @@ const MakeAppoinment = ({ JobSeekers, Consaltant, jobs }) => {
     e.preventDefault();
     try {
       const formData = {
-        Consaltant: ConsaltantEmail,
+        Consultant: ConsaltantEmail,
         Name: Name,
         Email: Email,
         ContactNumber: ContactNumber,

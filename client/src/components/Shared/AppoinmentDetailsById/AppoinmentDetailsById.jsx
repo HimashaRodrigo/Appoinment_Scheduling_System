@@ -96,7 +96,7 @@ const AppoinmentDetailsById = ({ data }) => {
           <TextFields Value={Date1} />
         </l.InputFeild1>
         <l.ButtonSection>
-          {user.Role === "Consaltant" ? (
+          {user.Role === "Consultant" ? (
             <FormButton text={"Finish"} onAction={closeAppoinment} />
           ) : (
             <FormButton text={"Cancel"} onAction={cancelAppoinment} />

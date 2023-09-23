@@ -7,7 +7,7 @@ const ReceptionistConsaltantDetails = ({menuItems,backRoutes}) => {
     const {data,isPending} = useFetch('api/v1/user/');
     let users = [];
     data?.data?.Users[0].map((data)=>{
-        if(data.Role === "Consaltant"){
+        if(data.Role === "Consultant"){
             users.push(data);
         }
     })
